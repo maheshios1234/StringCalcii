@@ -18,6 +18,26 @@ final class StringCalculatorTests: XCTestCase {
         let calculator = Calculator()
         XCTAssertEqual(try calculator.add("1"), 1)
     }
+    
+    
+    func testCustomDelimiterSemicolonReturnsSum() throws {
+        let calculator = Calculator()
+        XCTAssertEqual(try calculator.add("//;\n1;2"), 3)
+    }
+    
+    func testNegativeNumberThrowsError() {
+        let calculator = Calculator()
+        XCTAssertThrowsError(try calculator.add("-1")) { error in
+            XCTAssertEqual(error.localizedDescription, "negative numbers not allowed: -1")
+        }
+    }
+    func testMultipleNegativeNumbersThrowsErrorWithAllInMessage() {
+        let calculator = Calculator()
+        XCTAssertThrowsError(try calculator.add("-1,-2,3")) { error in
+            XCTAssertEqual(error.localizedDescription, "negative numbers not allowed: -1, -2")
+        }
+        
+    }
 
 }
 
